@@ -34,7 +34,7 @@ class Resources(object):
 
     def _get_lib(self, name):
         lib = self._get_url(name)
-        if isinstance(lib, Resource):
+        if self._is_resource(lib):
             return lib
         else:
             return self._import_lib(lib)
@@ -44,6 +44,9 @@ class Resources(object):
             return self.statics[name]
         except KeyError:
             raise NameNotKnowError(name)
+
+    def _is_resource(self, lib):
+        return isinstance(lib, Resource)
 
     def _import_lib(self, url):
         module_url, attrname = url.split(':')
