@@ -25,8 +25,7 @@ class ExampleFanstaticController(
 
 class TestFanstaticController(ControllerFixture):
 
-    def _cls_controller(self):
-        return ExampleFanstaticController
+    _testable_cls = ExampleFanstaticController
 
     @yield_fixture
     def mResources(self):
@@ -34,10 +33,10 @@ class TestFanstaticController(ControllerFixture):
         with patcher as mock:
             yield mock
 
-    def test_create_context(self, controller, mResources):
-        controller._create_context()
+    def test_create_context(self, testable, mResources):
+        testable._create_context()
 
-        assert controller.context == {
+        assert testable.context == {
             'context': True,
             'need': mResources.return_value.need
         }
